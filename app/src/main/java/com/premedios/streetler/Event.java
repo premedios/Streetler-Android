@@ -4,23 +4,21 @@ package com.premedios.streetler;
  * Created by user on 12/02/2016.
  */
 
-public class StreetEvent {
+public class Event {
     private int id;
     private String type;
     private String name;
     private String description;
-    private byte[] image;
-    private StreetUser creator;
+    private String imageURL;
 
-    public StreetEvent() {
+    public Event() {
     }
 
-    public StreetEvent(String type, String name, String description, byte[] image, StreetUser creator) {
+    public Event(String type, String name, String description, String imageURL) {
         this.type = type;
         this.name = name;
         this.description = description;
-        this.image = image;
-        this.creator = creator;
+        this.imageURL = imageURL;
     }
 
     public int getId() {
@@ -39,12 +37,8 @@ public class StreetEvent {
         return description;
     }
 
-    public byte[] getImage() {
-        return image;
-    }
-
-    public StreetUser getCreator() {
-        return creator;
+    public String getImageURL() {
+        return imageURL;
     }
 
     public void setId(int id) {
@@ -63,11 +57,5 @@ public class StreetEvent {
         this.description = description;
     }
 
-    public void setImage(byte[] image) {
-        this.image = image;
-    }
-
-    public void setCreator(StreetUser creator) {
-        this.creator = creator;
-    }
+    public void setImageURL(String imageURL) { this.imageURL = imageURL; }
 }
