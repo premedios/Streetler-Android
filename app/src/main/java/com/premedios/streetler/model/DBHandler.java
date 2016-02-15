@@ -1,4 +1,4 @@
-package com.premedios.streetler;
+package com.premedios.streetler.model;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
