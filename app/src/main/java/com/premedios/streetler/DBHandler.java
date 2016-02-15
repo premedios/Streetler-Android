@@ -31,6 +31,11 @@ public class DBHandler extends SQLiteOpenHelper {
     private static final String KEY_EVENT_DESCRIPTION = "description";
     private static final String KEY_EVENT_IMAGE = "image";
 
+    private static final String KEY_USER_FIRSTNAME = "FirstName";
+    private static final String KEY_USER_LASTNAME = "LastName";
+    private static final String KEY_USER_CITY = "City";
+    private static final String KEY_USER_DOB = "DateOFBirth";
+
     public DBHandler(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
@@ -60,5 +65,16 @@ public class DBHandler extends SQLiteOpenHelper {
                 + KEY_EVENT_DESCRIPTION + " TEXT, "
                 + KEY_EVENT_IMAGE + " TEXT";
         db.execSQL(CREATE_EVENT_TABLE_SQL);
+    }
+
+    private void createUserTable(SQLiteDatabase db) {
+        String CREATE_USER_TABLE_SQL =
+                "CREATE TABLE " + TABLE_USER +
+                        " (" + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                        + KEY_USER_FIRSTNAME + " TEXT, "
+                        + KEY_USER_LASTNAME + " TEXT, "
+                        + KEY_USER_CITY + " TEXT, "
+                        + KEY_USER_DOB + " DATE";
+        db.execSQL(CREATE_USER_TABLE_SQL);
     }
 }
