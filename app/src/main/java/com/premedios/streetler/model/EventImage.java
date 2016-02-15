@@ -1,4 +1,4 @@
-package com.premedios.streetler;
+package com.premedios.streetler.model;
 
 /**
  * Created by user on 12/02/2016.
