@@ -1,42 +1,16 @@
 package com.premedios.streetler.model;
 
+import com.activeandroid.Model;
+import com.activeandroid.annotation.Column;
+
 /**
  * Created by premedios on 13/02/16.
  */
-public class EventUser {
-    private int id;
-    private Event eventId;
-    private User userId;
+public class EventUser extends Model {
 
-    public EventUser() {}
+    @Column(name = "event id")
+    public Event eventId;
 
-    public EventUser(int id, Event eventId, User userId) {
-        this.id = id;
-        this.eventId = eventId;
-        this.userId = userId;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public Event getEventId() {
-        return eventId;
-    }
-
-    public void setEventId(Event eventId) {
-        this.eventId = eventId;
-    }
-
-    public User getUserId() {
-        return userId;
-    }
-
-    public void setUserId(User userId) {
-        this.userId = userId;
-    }
+    @Column(name = "user id")
+    public User userId;
 }

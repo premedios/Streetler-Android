@@ -2,6 +2,7 @@ buildscript {
     repositories {
         maven { url 'https://maven.fabric.io/public' }
         maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+        maven { url "https://dl.bintray.com/mediafire/maven/" }
     }
 
     dependencies {
@@ -15,6 +16,7 @@ apply plugin: 'io.fabric'
 repositories {
     maven { url 'https://maven.fabric.io/public' }
     maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+    maven { url "https://dl.bintray.com/mediafire/maven/" }
 }
 
 android {
@@ -51,4 +53,5 @@ dependencies {
     compile 'com.google.android.gms:play-services-gcm:8.4.0'
     compile 'com.michaelpardo:activeandroid:3.1.0-SNAPSHOT'
     compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
+    compile 'com.github.mediafire:mediafire-java-sdk:5.0.2'
 }

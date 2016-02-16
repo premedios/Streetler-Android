@@ -1,5 +1,6 @@
 package com.premedios.streetler.model;
 
+import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
 
@@ -9,11 +10,14 @@ import com.activeandroid.annotation.Table;
 
 @Table(name = "Event Images")
 
-public class EventImage {
+public class EventImage extends Model {
     @Column(name = "image")
     public byte[] image;
 
     @Column(name = "user")
     private User user;
+
+    @Column(name = "event")
+    public Event event;
 
 }

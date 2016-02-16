@@ -29,4 +29,7 @@ public class Event extends Model {
 
     @Column(name = "longitude")
     public String longitude;
+
+    @Column(name = "image")
+    public EventImage image;
 }
