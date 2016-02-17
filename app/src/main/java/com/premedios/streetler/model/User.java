@@ -7,7 +7,7 @@ import java.sql.Date;
 import java.util.List;
 
 /**
- * Created by user on 12/02/2016.
+ * Created by Pedro Remedios on 12/02/2016.
  */
 public class User extends Model {
 
@@ -23,9 +23,11 @@ public class User extends Model {
     @Column(name = "dateofbirth")
     private Date dateoOfBirth;
 
-    public List<EventImage> images() {
-        return getMany(EventImage.class, "user");
-    }
+    public List<EventImage> images() { return getMany(EventImage.class, "userId"); }
 
-    public List<EventLike> likes() { return getMany(EventLike.class, "user"); }
+    public List<EventVideo> videos() { return getMany(EventVideo.class, "userId"); }
+
+    public List<EventLike> likes() { return getMany(EventLike.class, "userId"); }
+
+    public List<EventNotification> notifications() { return getMany(EventNotification.class, "userId"); }
 }

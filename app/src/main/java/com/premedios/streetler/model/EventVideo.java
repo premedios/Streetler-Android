@@ -1,12 +1,18 @@
 package com.premedios.streetler.model;
 
 import com.activeandroid.Model;
+import com.activeandroid.annotation.Column;
 
 /**
  * Created by user on 12/02/2016.
  */
 public class EventVideo extends Model {
-    private byte[] video;
-    private Event eventId;
-    private User userId;
+    @Column(name = "videoURL")
+    public String videoURL;
+
+    @Column(name = "eventId")
+    public Event eventId;
+
+    @Column(name = "userId")
+    public User userId;
 }

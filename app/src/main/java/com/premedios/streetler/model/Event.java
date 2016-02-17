@@ -4,6 +4,8 @@ import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
 
+import java.util.List;
+
 /**
  * Created by user on 12/02/2016.
  */
@@ -32,4 +34,6 @@ public class Event extends Model {
 
     @Column(name = "image")
     public EventImage image;
+
+    public List<EventLike> likes() { return getMany(EventLike.class, "eventId"); }
 }

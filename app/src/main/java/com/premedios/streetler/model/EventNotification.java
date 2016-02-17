@@ -11,6 +11,6 @@ public class EventNotification extends Model {
     @Column(name = "type")
     public String type;
 
-    @Column(name = "user id")
+    @Column(name = "userId")
     public User userId;
 }

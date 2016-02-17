@@ -7,9 +7,9 @@ import com.activeandroid.annotation.Column;
  * Created by user on 12/02/2016.
  */
 public class EventLike extends Model {
-    @Column(name = "event id")
+    @Column(name = "eventId")
     public Event eventId;
 
-    @Column(name = "user id")
+    @Column(name = "userId")
     public User userId;
 }

@@ -11,8 +11,8 @@ import com.activeandroid.annotation.Table;
 @Table(name = "Event Images")
 
 public class EventImage extends Model {
-    @Column(name = "image")
-    public byte[] image;
+    @Column(name = "imageURL")
+    public String imageURL;
 
     @Column(name = "user")
     private User user;
