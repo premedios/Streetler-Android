@@ -9,11 +9,14 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.activeandroid.query.Select;
 import com.premedios.streetler.model.DBHandler;
+import com.premedios.streetler.model.Event;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -43,7 +46,17 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        DBHandler dbHandler = new DBHandler(this);
+        Event event = new Event();
+        event.name = "Street Jazz";
+        event.save();
+
+        event = new Event();
+        event.name = "Street Fado";
+        event.save();
+
+        event = new Select().from(Event.class).executeSingle();
+        Log.d("ActiveAndroid", event.name);
+
     }
 
     @Override

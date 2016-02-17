@@ -8,7 +8,7 @@ import com.activeandroid.annotation.Table;
  * Created by user on 12/02/2016.
  */
 
-@Table(name = "Event Images")
+@Table(name = "EventImages")
 
 public class EventImage extends Model {
     @Column(name = "imageURL")
