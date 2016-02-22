@@ -15,8 +15,10 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.activeandroid.query.Select;
-import com.premedios.streetler.model.DBHandler;
+import com.crashlytics.android.Crashlytics;
 import com.premedios.streetler.model.Event;
+
+import io.fabric.sdk.android.Fabric;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -24,6 +26,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Fabric.with(this, new Crashlytics());
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
