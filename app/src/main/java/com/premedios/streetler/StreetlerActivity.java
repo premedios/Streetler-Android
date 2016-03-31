@@ -161,7 +161,8 @@ public class StreetlerActivity extends AppCompatActivity implements
             Log.d("FragmentStreetler", String.format("%d", position));
             if( position == 0) return new MapFragment();
             if( position == 1) return new MyProfileFragment();
-
+            if( position == 2) return new MyProfileFragment();
+            if( position == 3) return new MyProfileFragment();
             return null;
         }
 

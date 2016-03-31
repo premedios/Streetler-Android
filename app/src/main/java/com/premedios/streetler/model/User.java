@@ -2,6 +2,7 @@ package com.premedios.streetler.model;
 
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
+import com.activeandroid.annotation.Table;
 
 import java.sql.Date;
 import java.util.List;
@@ -9,6 +10,8 @@ import java.util.List;
 /**
  * Created by Pedro Remedios on 12/02/2016.
  */
+
+@Table(name="User")
 public class User extends Model {
 
     @Column(name = "firstname")
