@@ -1,4 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="search_street">Search Street</string>
+    <string name="LoginWelcome">Welcome To Streetler!</string>
+    <string name="UserLabel">User</string>
+    <string name="PasswordLabel">Password</string>
+    <string name="LoginButtonText">Login</string>
+    <string name="first_name_hint">First Name</string>
+    <string name="last_name_hint">Last Name</string>
+    <string name="date_of_birth_hint">Date Of Birth</string>
+    <string name="login_text">Already registered? Login here!</string>
+    <string name="register_button_text">Register</string>
 </resources>

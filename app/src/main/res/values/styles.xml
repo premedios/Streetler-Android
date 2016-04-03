@@ -26,7 +26,7 @@
         <item name="android:textColorHint">@color/colorText</item>
         <item name="android:textColorHighlight">@color/colorText</item>
         <item name="android:textColorLink">@color/colorText</item>
-        <item name="android:textSize">30sp</item>
+        <item name="android:textSize">25sp</item>
         <item name="android:colorAccent">@color/colorText</item>
         <item name="android:colorControlNormal">@color/colorText</item>
         <item name="android:colorControlActivated">@color/colorText</item>
