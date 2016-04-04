@@ -6,8 +6,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request.Method;
@@ -20,17 +22,20 @@ import com.premedios.streetler.helper.SessionManager;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 public class RegisterActivity extends Activity {
     private static final String TAG = RegisterActivity.class.getSimpleName();
     private Button btnRegister;
-    private Button btnLinkToLogin;
+    private TextView txtLinkToLogin;
     private EditText inputFirstName;
     private EditText inputLastName;
     private EditText inputEmail;
     private EditText inputPassword;
+    private EditText inputDateOfBirth;
+    private AutoCompleteTextView actvSex;
     private ProgressDialog pDialog;
     private SessionManager session;
     private SQLiteHandler db;
@@ -41,10 +46,13 @@ public class RegisterActivity extends Activity {
         setContentView(R.layout.activity_register);
 
         inputFirstName = (EditText) findViewById(R.id.first_name);
+        inputLastName = (EditText) findViewById(R.id.last_name);
         inputEmail = (EditText) findViewById(R.id.email);
         inputPassword = (EditText) findViewById(R.id.password);
-        btnRegister = (Button) findViewById(R.id.btnRegister);
-        btnLinkToLogin = (Button) findViewById(R.id.btnLinkToLoginScreen);
+        inputDateOfBirth = (EditText) findViewById(R.id.date_of_birth);
+        actvSex = (AutoCompleteTextView) findViewById(R.id.sex);
+        btnRegister = (Button) findViewById(R.id.register_button);
+        txtLinkToLogin = (TextView) findViewById(R.id.login_text);
 
         // Progress dialog
         pDialog = new ProgressDialog(this);
@@ -68,9 +76,10 @@ public class RegisterActivity extends Activity {
         // Register Button Click event
         btnRegister.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                String name = inputFullName.getText().toString().trim();
+                String first_name = inputFirstName.getText().toString().trim();
                 String email = inputEmail.getText().toString().trim();
                 String password = inputPassword.getText().toString().trim();
+                Date date_of_birth = inputDateOfBirth.getText().date
 
                 if (!name.isEmpty() && !email.isEmpty() && !password.isEmpty()) {
                     registerUser(name, email, password);
