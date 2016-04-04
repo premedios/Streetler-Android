@@ -26,4 +26,9 @@
     <string name="male_female_hint">Sex</string>
     <string name="login_text">Already registered? Login here!</string>
     <string name="register_button_text">Register</string>
+
+    <string-array name="sex_array">
+        <item>Male</item>
+        <item>Female</item>
+    </string-array>
 </resources>

@@ -1,14 +1,17 @@
 package com.premedios.streetler;
 
 import android.app.Activity;
+import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.AutoCompleteTextView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,6 +25,9 @@ import com.premedios.streetler.helper.SessionManager;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -35,7 +41,7 @@ public class RegisterActivity extends Activity {
     private EditText inputEmail;
     private EditText inputPassword;
     private EditText inputDateOfBirth;
-    private AutoCompleteTextView actvSex;
+    private Spinner spinSex;
     private ProgressDialog pDialog;
     private SessionManager session;
     private SQLiteHandler db;
@@ -50,9 +56,41 @@ public class RegisterActivity extends Activity {
         inputEmail = (EditText) findViewById(R.id.email);
         inputPassword = (EditText) findViewById(R.id.password);
         inputDateOfBirth = (EditText) findViewById(R.id.date_of_birth);
-        actvSex = (AutoCompleteTextView) findViewById(R.id.sex);
+        spinSex = (Spinner) findViewById(R.id.sex);
         btnRegister = (Button) findViewById(R.id.register_button);
         txtLinkToLogin = (TextView) findViewById(R.id.login_text);
+
+        ArrayAdapter<CharSequence> sexAdapter = ArrayAdapter.createFromResource(this, R.array.sex_array, android.R.layout.simple_spinner_item);
+        sexAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinSex.setAdapter(sexAdapter);
+
+
+        final Calendar myCalendar = Calendar.getInstance();
+
+        final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
+
+            @Override
+            public void onDateSet(DatePicker view, int year, int monthOfYear,
+                                  int dayOfMonth) {
+                // TODO Auto-generated method stub
+                myCalendar.set(Calendar.YEAR, year);
+                myCalendar.set(Calendar.MONTH, monthOfYear);
+                myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                updateDateOfBirth();
+            }
+
+        };
+
+        inputDateOfBirth.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                // TODO Auto-generated method stub
+                new DatePickerDialog(getApplicationContext(), date, myCalendar
+                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+            }
+        });
 
         // Progress dialog
         pDialog = new ProgressDialog(this);
@@ -68,7 +106,7 @@ public class RegisterActivity extends Activity {
         if (session.isLoggedIn()) {
             // User is already logged in. Take him to main activity
             Intent intent = new Intent(RegisterActivity.this,
-                    MainActivity.class);
+                    StreetlerActivity.class);
             startActivity(intent);
             finish();
         }
@@ -77,13 +115,22 @@ public class RegisterActivity extends Activity {
         btnRegister.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 String first_name = inputFirstName.getText().toString().trim();
+                String last_name = inputLastName.getText().toString().trim();
                 String email = inputEmail.getText().toString().trim();
                 String password = inputPassword.getText().toString().trim();
-                Date date_of_birth = inputDateOfBirth.getText().date
+                SimpleDateFormat dateOfBirthFormat = new SimpleDateFormat("MM/dd/yyyy");
+                Date date_of_birth = new Date();
+                try {
+                    date_of_birth = dateOfBirthFormat.parse(inputDateOfBirth.getText().toString());
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                String sex = spinSex.getSelectedItem().toString();
 
-                if (!name.isEmpty() && !email.isEmpty() && !password.isEmpty()) {
-                    registerUser(name, email, password);
-                } else {
+                if (!first_name.isEmpty() && !last_name.isEmpty() &&
+                        !email.isEmpty() && !password.isEmpty())
+                    registerUser(first_name, last_name, date_of_birth, sex, email, password);
+                else {
                     Toast.makeText(getApplicationContext(),
                             "Please enter your details!", Toast.LENGTH_LONG)
                             .show();
@@ -92,11 +139,10 @@ public class RegisterActivity extends Activity {
         });
 
         // Link to Login Screen
-        btnLinkToLogin.setOnClickListener(new View.OnClickListener() {
+        txtLinkToLogin.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View view) {
-                Intent i = new Intent(getApplicationContext(),
-                        LoginActivity.class);
+                Intent i = new Intent(getApplicationContext(), LoginActivity.class);
                 startActivity(i);
                 finish();
             }
@@ -108,7 +154,8 @@ public class RegisterActivity extends Activity {
      * Function to store user in MySQL database will post params(tag, name,
      * email, password) to register url
      */
-    private void registerUser(final String name, final String email,
+    private void registerUser(final String first_name, final String last_name,
+                              final Date date_final, final String sex, final String email,
                               final String password) {
         // Tag used to cancel the request
         String tag_string_req = "req_register";
@@ -177,9 +224,11 @@ public class RegisterActivity extends Activity {
             protected Map<String, String> getParams() {
                 // Posting params to register url
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("name", name);
+                params.put("first_name", first_name);
+                params.put("last_name", last_name);
                 params.put("email", email);
                 params.put("password", password);
+                params.put("sex", sex);
 
                 return params;
             }
