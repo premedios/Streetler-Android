@@ -30,6 +30,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 public class RegisterActivity extends Activity {
@@ -148,6 +149,14 @@ public class RegisterActivity extends Activity {
             }
         });
 
+    }
+
+    private void updateDateOfBirth() {
+
+        String myFormat = "MM/dd/yy"; //In which you need put here
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+
+        inputDateOfBirth.setText(sdf.format(myCalendar.getTime()));
     }
 
     /**
