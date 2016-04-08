@@ -28,8 +28,7 @@
                     android:id="@+id/first_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/first_name_hint"
-                    android:inputType="text" />
+                    android:hint="@string/first_name_hint"/>
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
@@ -41,8 +40,7 @@
                     android:id="@+id/last_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/last_name_hint"
-                    android:inputType="text"/>
+                    android:hint="@string/last_name_hint"/>
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
@@ -54,8 +52,7 @@
                     android:id="@+id/email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/email_hint"
-                    android:inputType="textEmailAddress"/>
+                    android:hint="@string/email_hint"/>
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
@@ -80,15 +77,16 @@
                     android:id="@+id/date_of_birth"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/date_of_birth_hint"
-                    android:inputType="date"/>
+                    android:hint="@string/date_of_birth_hint"/>
             </android.support.design.widget.TextInputLayout>
 
 
             <Spinner
                 android:id="@+id/sex"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"></Spinner>
+                android:layout_height="wrap_content"
+                android:spinnerMode="dropdown"
+                />
 
             <Button
                 android:id="@+id/register_button"

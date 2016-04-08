@@ -1,7 +1,6 @@
 package com.premedios.streetler;
 
 import android.app.Activity;
-import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,7 +8,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -27,10 +25,8 @@ import org.json.JSONObject;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
 
 public class RegisterActivity extends Activity {
@@ -41,7 +37,7 @@ public class RegisterActivity extends Activity {
     private EditText inputLastName;
     private EditText inputEmail;
     private EditText inputPassword;
-    private EditText inputDateOfBirth;
+    private TextView inputDateOfBirth;
     private Spinner spinSex;
     private ProgressDialog pDialog;
     private SessionManager session;
@@ -52,46 +48,19 @@ public class RegisterActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
+        String sex[] = {"Male", "Female"};
+
         inputFirstName = (EditText) findViewById(R.id.first_name);
         inputLastName = (EditText) findViewById(R.id.last_name);
         inputEmail = (EditText) findViewById(R.id.email);
         inputPassword = (EditText) findViewById(R.id.password);
-        inputDateOfBirth = (EditText) findViewById(R.id.date_of_birth);
+        inputDateOfBirth = (TextView) findViewById(R.id.date_of_birth);
         spinSex = (Spinner) findViewById(R.id.sex);
         btnRegister = (Button) findViewById(R.id.register_button);
         txtLinkToLogin = (TextView) findViewById(R.id.login_text);
 
-        ArrayAdapter<CharSequence> sexAdapter = ArrayAdapter.createFromResource(this, R.array.sex_array, android.R.layout.simple_spinner_item);
-        sexAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        ArrayAdapter<String> sexAdapter = new ArrayAdapter<String>(this, R.layout.sex_spinner_item_layout, R.id.sex_item, sex);
         spinSex.setAdapter(sexAdapter);
-
-
-        final Calendar myCalendar = Calendar.getInstance();
-
-        final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
-
-            @Override
-            public void onDateSet(DatePicker view, int year, int monthOfYear,
-                                  int dayOfMonth) {
-                // TODO Auto-generated method stub
-                myCalendar.set(Calendar.YEAR, year);
-                myCalendar.set(Calendar.MONTH, monthOfYear);
-                myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                updateDateOfBirth();
-            }
-
-        };
-
-        inputDateOfBirth.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                // TODO Auto-generated method stub
-                new DatePickerDialog(getApplicationContext(), date, myCalendar
-                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
-                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
-            }
-        });
 
         // Progress dialog
         pDialog = new ProgressDialog(this);
@@ -149,14 +118,6 @@ public class RegisterActivity extends Activity {
             }
         });
 
-    }
-
-    private void updateDateOfBirth() {
-
-        String myFormat = "MM/dd/yy"; //In which you need put here
-        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
-
-        inputDateOfBirth.setText(sdf.format(myCalendar.getTime()));
     }
 
     /**
