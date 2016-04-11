@@ -4,7 +4,12 @@
       tools:context="com.premedios.streetler.StreetlerActivity">
     <item
         android:id="@+id/action_search"
-        android:orderInCategory="100"
+        android:icon="@drawable/ic_search_white_48dp"
         android:title="@string/search_street"
-        app:showAsAction="never"/>
+        app:showAsAction="ifRoom"/>
+    <item
+        android:id="@+id/action_add_street"
+        android:icon="@drawable/ic_add_white_48dp"
+        android:title="@string/action_add_street"
+        app:showAsAction="ifRoom"/>
 </menu>

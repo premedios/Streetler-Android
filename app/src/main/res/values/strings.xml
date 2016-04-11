@@ -32,4 +32,5 @@
         <item>Female</item>
     </string-array>
     <string name="title_activity_friends">FriendsActivity</string>
+    <string name="action_add_street">Add Street</string>
 </resources>
