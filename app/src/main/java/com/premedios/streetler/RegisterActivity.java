@@ -1,6 +1,7 @@
 package com.premedios.streetler;
 
 import android.app.Activity;
+import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -25,8 +27,10 @@ import org.json.JSONObject;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 public class RegisterActivity extends Activity {
@@ -59,7 +63,7 @@ public class RegisterActivity extends Activity {
         btnRegister = (Button) findViewById(R.id.register_button);
         txtLinkToLogin = (TextView) findViewById(R.id.login_text);
 
-        ArrayAdapter<String> sexAdapter = new ArrayAdapter<String>(this, R.layout.sex_spinner_item_layout, R.id.sex_item, sex);
+        ArrayAdapter<String> sexAdapter = new ArrayAdapter<>(this, R.layout.sex_spinner_item_layout, R.id.sex_item, sex);
         spinSex.setAdapter(sexAdapter);
 
         // Progress dialog
@@ -88,7 +92,7 @@ public class RegisterActivity extends Activity {
                 String last_name = inputLastName.getText().toString().trim();
                 String email = inputEmail.getText().toString().trim();
                 String password = inputPassword.getText().toString().trim();
-                SimpleDateFormat dateOfBirthFormat = new SimpleDateFormat("MM/dd/yyyy");
+                SimpleDateFormat dateOfBirthFormat = new SimpleDateFormat("MM/dd/yyyy", Locale.getDefault());
                 Date date_of_birth = new Date();
                 try {
                     date_of_birth = dateOfBirthFormat.parse(inputDateOfBirth.getText().toString());
@@ -118,6 +122,29 @@ public class RegisterActivity extends Activity {
             }
         });
 
+        final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                Calendar myCalendar = Calendar.getInstance();
+                myCalendar.set(Calendar.YEAR, year);
+                myCalendar.set(Calendar.MONTH, monthOfYear);
+                myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+
+                String myFormat = "MM/dd/yy"; //In which you need put here
+                SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+                inputDateOfBirth.setText(sdf.format(myCalendar.getTime()));
+            }
+        };
+
+        inputDateOfBirth.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                Calendar myCalendar = Calendar.getInstance();
+                new DatePickerDialog(RegisterActivity.this, date, myCalendar
+                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+            }
+        });
     }
 
     /**
@@ -193,7 +220,7 @@ public class RegisterActivity extends Activity {
             @Override
             protected Map<String, String> getParams() {
                 // Posting params to register url
-                Map<String, String> params = new HashMap<String, String>();
+                Map<String, String> params = new HashMap<>();
                 params.put("first_name", first_name);
                 params.put("last_name", last_name);
                 params.put("email", email);
