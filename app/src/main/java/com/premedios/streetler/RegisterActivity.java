@@ -1,10 +1,10 @@
 package com.premedios.streetler;
 
-import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -19,6 +19,8 @@ import com.android.volley.Request.Method;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.codetroopers.betterpickers.datepicker.DatePickerBuilder;
+import com.codetroopers.betterpickers.datepicker.DatePickerDialogFragment;
 import com.premedios.streetler.helper.SQLiteHandler;
 import com.premedios.streetler.helper.SessionManager;
 
@@ -33,10 +35,8 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-public class RegisterActivity extends Activity {
+public class RegisterActivity extends FragmentActivity implements DatePickerDialogFragment.DatePickerDialogHandler {
     private static final String TAG = RegisterActivity.class.getSimpleName();
-    private Button btnRegister;
-    private TextView txtLinkToLogin;
     private EditText inputFirstName;
     private EditText inputLastName;
     private EditText inputEmail;
@@ -44,8 +44,19 @@ public class RegisterActivity extends Activity {
     private TextView inputDateOfBirth;
     private Spinner spinSex;
     private ProgressDialog pDialog;
-    private SessionManager session;
     private SQLiteHandler db;
+
+    @Override
+    public void onDialogDateSet(int reference, int year, int monthOfYear, int dayOfMonth) {
+        Calendar myCalendar = Calendar.getInstance();
+        myCalendar.set(Calendar.YEAR, year);
+        myCalendar.set(Calendar.MONTH, monthOfYear);
+        myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+
+        String myFormat = "MM/dd/yy"; //In which you need put here
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+        inputDateOfBirth.setText(sdf.format(myCalendar.getTime()));
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -54,14 +65,15 @@ public class RegisterActivity extends Activity {
 
         String sex[] = {"Male", "Female"};
 
+
         inputFirstName = (EditText) findViewById(R.id.first_name);
         inputLastName = (EditText) findViewById(R.id.last_name);
         inputEmail = (EditText) findViewById(R.id.email);
         inputPassword = (EditText) findViewById(R.id.password);
         inputDateOfBirth = (TextView) findViewById(R.id.date_of_birth);
         spinSex = (Spinner) findViewById(R.id.sex);
-        btnRegister = (Button) findViewById(R.id.register_button);
-        txtLinkToLogin = (TextView) findViewById(R.id.login_text);
+        Button btnRegister = (Button) findViewById(R.id.register_button);
+        TextView txtLinkToLogin = (TextView) findViewById(R.id.login_text);
 
         ArrayAdapter<String> sexAdapter = new ArrayAdapter<>(this, R.layout.sex_spinner_item_layout, R.id.sex_item, sex);
         spinSex.setAdapter(sexAdapter);
@@ -71,7 +83,7 @@ public class RegisterActivity extends Activity {
         pDialog.setCancelable(false);
 
         // Session manager
-        session = new SessionManager(getApplicationContext());
+        SessionManager session = new SessionManager(getApplicationContext());
 
         // SQLite database handler
         db = new SQLiteHandler(getApplicationContext());
@@ -140,11 +152,18 @@ public class RegisterActivity extends Activity {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 Calendar myCalendar = Calendar.getInstance();
-                new DatePickerDialog(RegisterActivity.this, date, myCalendar
-                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
-                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+                //new DatePickerDialog(RegisterActivity.this, date, myCalendar
+                //        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+                //        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+                DatePickerBuilder dpb = new DatePickerBuilder()
+                        .setFragmentManager(getSupportFragmentManager())
+                        .setStyleResId(R.style.BetterPickersDialogFragment)
+                        .setYearOptional(true);
+                dpb.show();
             }
         });
+
+
     }
 
     /**
