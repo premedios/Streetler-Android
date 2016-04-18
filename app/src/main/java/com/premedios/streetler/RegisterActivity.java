@@ -1,15 +1,13 @@
 package com.premedios.streetler;
 
-import android.app.Activity;
-import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -19,12 +17,15 @@ import com.android.volley.Request.Method;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.codetroopers.betterpickers.calendardatepicker.CalendarDatePickerDialogFragment;
 import com.premedios.streetler.helper.SQLiteHandler;
 import com.premedios.streetler.helper.SessionManager;
+import com.premedios.streetler.model.User;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -33,8 +34,9 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-public class RegisterActivity extends Activity {
+public class RegisterActivity extends AppCompatActivity implements CalendarDatePickerDialogFragment.OnDateSetListener {
     private static final String TAG = RegisterActivity.class.getSimpleName();
+    private final String DATE_PICKER = "Date Picker";
     private Button btnRegister;
     private TextView txtLinkToLogin;
     private EditText inputFirstName;
@@ -122,29 +124,40 @@ public class RegisterActivity extends Activity {
             }
         });
 
-        final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                Calendar myCalendar = Calendar.getInstance();
-                myCalendar.set(Calendar.YEAR, year);
-                myCalendar.set(Calendar.MONTH, monthOfYear);
-                myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-
-                String myFormat = "MM/dd/yy"; //In which you need put here
-                SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
-                inputDateOfBirth.setText(sdf.format(myCalendar.getTime()));
-            }
-        };
-
         inputDateOfBirth.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 Calendar myCalendar = Calendar.getInstance();
-                new DatePickerDialog(RegisterActivity.this, date, myCalendar
-                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
-                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+                CalendarDatePickerDialogFragment cdp = new CalendarDatePickerDialogFragment()
+                        .setOnDateSetListener(RegisterActivity.this)
+                        .setFirstDayOfWeek(Calendar.MONDAY)
+                        .setPreselectedDate(Calendar.YEAR, Calendar.MONTH, Calendar.DAY_OF_MONTH)
+                        .setDoneText("Done")
+                        .setCancelText("Cancel");
+                cdp.show(getSupportFragmentManager(), DATE_PICKER);
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        CalendarDatePickerDialogFragment calendarDatePickerDialogFragment = (CalendarDatePickerDialogFragment) getSupportFragmentManager().findFragmentByTag(DATE_PICKER);
+        if (calendarDatePickerDialogFragment != null) {
+            calendarDatePickerDialogFragment.setOnDateSetListener(this);
+        }
+    }
+
+    @Override
+    public void onDateSet(CalendarDatePickerDialogFragment dialog, int year, int monthOfYear, int dayOfMonth) {
+        Calendar myCalendar = Calendar.getInstance();
+        myCalendar.set(Calendar.YEAR, year);
+        myCalendar.set(Calendar.MONTH, monthOfYear);
+        myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+
+        String myFormat = "MM/dd/yy"; //In which you need put here
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+        inputDateOfBirth.setText(sdf.format(myCalendar.getTime()));
     }
 
     /**
@@ -160,12 +173,11 @@ public class RegisterActivity extends Activity {
         pDialog.setMessage("Registering ...");
         showDialog();
 
-        StringRequest strReq = new StringRequest(Method.POST,
-                AppConfig.URL_REGISTER, new Response.Listener<String>() {
+        StringRequest strReq = new StringRequest(Method.POST, AppConfig.URL_REGISTER, new Response.Listener<String>() {
 
             @Override
             public void onResponse(String response) {
-                Log.d(TAG, "Register Response: " + response.toString());
+                Log.d(TAG, "Register Response: " + response);
                 hideDialog();
 
                 try {
@@ -177,13 +189,27 @@ public class RegisterActivity extends Activity {
                         String uid = jObj.getString("uid");
 
                         JSONObject user = jObj.getJSONObject("user");
-                        String name = user.getString("name");
+                        String firstname = user.getString("first_name");
+                        String lastname = user.getString("last_name");
+                        DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.MEDIUM, Locale.getDefault());
+                        Date dateOfBirth = null;
+                        try {
+                            dateOfBirth = dateFormat.parse(user.getString("date_of_birth"));
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
                         String email = user.getString("email");
                         String created_at = user
                                 .getString("created_at");
 
                         // Inserting row in users table
-                        db.addUser(name, email, uid, created_at);
+                        //db.addUser(name, email, uid, created_at);
+                        User registeringUser = new User();
+
+                        registeringUser.firstname = firstname;
+                        registeringUser.lastname = lastname;
+                        registeringUser.dateOfBirth = (java.sql.Date) dateOfBirth;
+                        registeringUser.save();
 
                         Toast.makeText(getApplicationContext(), "User successfully registered. Try login now!", Toast.LENGTH_LONG).show();
 

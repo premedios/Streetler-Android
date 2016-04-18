@@ -15,16 +15,16 @@ import java.util.List;
 public class User extends Model {
 
     @Column(name = "firstname")
-    private String firstname;
+    public String firstname;
 
     @Column(name = "lastname")
-    private String lastname;
+    public String lastname;
 
     @Column(name = "city")
-    private String city;
+    public String city;
 
     @Column(name = "dateofbirth")
-    private Date dateoOfBirth;
+    public Date dateOfBirth;
 
     public List<EventImage> images() { return getMany(EventImage.class, "userId"); }
 
