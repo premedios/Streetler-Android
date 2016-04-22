@@ -41,6 +41,7 @@ public class RegisterActivity extends AppCompatActivity implements CalendarDateP
     private TextView txtLinkToLogin;
     private EditText inputFirstName;
     private EditText inputLastName;
+    private EditText inputCity;
     private EditText inputEmail;
     private EditText inputPassword;
     private TextView inputDateOfBirth;
@@ -58,6 +59,7 @@ public class RegisterActivity extends AppCompatActivity implements CalendarDateP
 
         inputFirstName = (EditText) findViewById(R.id.first_name);
         inputLastName = (EditText) findViewById(R.id.last_name);
+        inputCity = (EditText) findViewById(R.id.city);
         inputEmail = (EditText) findViewById(R.id.email);
         inputPassword = (EditText) findViewById(R.id.password);
         inputDateOfBirth = (TextView) findViewById(R.id.date_of_birth);
@@ -92,6 +94,7 @@ public class RegisterActivity extends AppCompatActivity implements CalendarDateP
             public void onClick(View view) {
                 String first_name = inputFirstName.getText().toString().trim();
                 String last_name = inputLastName.getText().toString().trim();
+                String city = inputCity.getText().toString().trim();
                 String email = inputEmail.getText().toString().trim();
                 String password = inputPassword.getText().toString().trim();
                 SimpleDateFormat dateOfBirthFormat = new SimpleDateFormat("MM/dd/yyyy", Locale.getDefault());
@@ -105,7 +108,7 @@ public class RegisterActivity extends AppCompatActivity implements CalendarDateP
 
                 if (!first_name.isEmpty() && !last_name.isEmpty() &&
                         !email.isEmpty() && !password.isEmpty())
-                    registerUser(first_name, last_name, date_of_birth, sex, email, password);
+                    registerUser(first_name, last_name, city, date_of_birth, sex, email, password);
                 else {
                     Toast.makeText(getApplicationContext(),
                             "Please enter your details!", Toast.LENGTH_LONG)
@@ -165,7 +168,8 @@ public class RegisterActivity extends AppCompatActivity implements CalendarDateP
      * email, password) to register url
      */
     private void registerUser(final String first_name, final String last_name,
-                              final Date date_final, final String sex, final String email,
+                              final String city, final Date date_of_birth,
+                              final String sex, final String email,
                               final String password) {
         // Tag used to cancel the request
         String tag_string_req = "req_register";
@@ -173,7 +177,7 @@ public class RegisterActivity extends AppCompatActivity implements CalendarDateP
         pDialog.setMessage("Registering ...");
         showDialog();
 
-        StringRequest strReq = new StringRequest(Method.POST, AppConfig.URL_REGISTER, new Response.Listener<String>() {
+        StringRequest strReq = new StringRequest(Method.POST, AppConfig.URL, new Response.Listener<String>() {
 
             @Override
             public void onResponse(String response) {
@@ -208,6 +212,7 @@ public class RegisterActivity extends AppCompatActivity implements CalendarDateP
 
                         registeringUser.firstname = firstname;
                         registeringUser.lastname = lastname;
+                        registeringUser.city = city;
                         registeringUser.dateOfBirth = (java.sql.Date) dateOfBirth;
                         registeringUser.save();
 
@@ -252,6 +257,10 @@ public class RegisterActivity extends AppCompatActivity implements CalendarDateP
                 params.put("email", email);
                 params.put("password", password);
                 params.put("sex", sex);
+                params.put("city", city);
+                DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.MEDIUM, Locale.getDefault());
+                String dateString = dateFormat.format(date_of_birth);
+                params.put("date_of_birth", dateString);
 
                 return params;
             }

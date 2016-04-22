@@ -112,8 +112,10 @@ public class LoginActivity extends Activity {
         pDialog.setMessage("Logging in ...");
         showDialog();
 
+        Log.d(TAG, "Email: " + email);
+        Log.d(TAG, "Password: " + password);
         StringRequest strReq = new StringRequest(Method.POST,
-                AppConfig.URL_LOGIN, new Response.Listener<String>() {
+                AppConfig.URL, new Response.Listener<String>() {
 
             @Override
             public void onResponse(String response) {
@@ -122,7 +124,7 @@ public class LoginActivity extends Activity {
 
                 try {
                     JSONObject jObj = new JSONObject(response);
-                    boolean error = jObj.getBoolean("error");
+                    boolean error = jOj.getBoolean("error");
 
                     // Check for error node in json
                     if (!error) {
