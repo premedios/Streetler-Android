@@ -15,6 +15,11 @@ import com.android.volley.Request.Method;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
 import com.premedios.streetler.helper.SQLiteHandler;
 import com.premedios.streetler.helper.SessionManager;
 
@@ -30,12 +35,15 @@ public class LoginActivity extends Activity {
     private TextView btnLinkToRegister;
     private EditText inputEmail;
     private EditText inputPassword;
+    private LoginButton btnFacebookLogin;
     private ProgressDialog pDialog;
     private SessionManager session;
     private SQLiteHandler db;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+
+        CallbackManager callbackManager;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
@@ -43,7 +51,29 @@ public class LoginActivity extends Activity {
         inputPassword = (EditText) findViewById(R.id.password);
         btnLogin = (Button) findViewById(R.id.login);
         btnLinkToRegister = (TextView) findViewById(R.id.signup);
+        btnFacebookLogin = (LoginButton) findViewById(R.id.facebook_login_button);
 
+        callbackManager = CallbackManager.Factory.create();
+
+        btnFacebookLogin.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+                Log.d(TAG, "Facebook login success");
+                Intent i = new Intent(getApplicationContext(), StreetlerActivity.class);
+                startActivity(i);
+                finish();
+            }
+
+            @Override
+            public void onCancel() {
+                Log.d(TAG, "Facebook login cancel");
+            }
+
+            @Override
+            public void onError(FacebookException error) {
+                Log.d(TAG, "Facebook login error");
+            }
+        });
 
         btnLinkToRegister.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -103,6 +133,37 @@ public class LoginActivity extends Activity {
     }
 
     /**
+     * Called when an activity you launched exits, giving you the requestCode
+     * you started it with, the resultCode it returned, and any additional
+     * data from it.  The <var>resultCode</var> will be
+     * {@link #RESULT_CANCELED} if the activity explicitly returned that,
+     * didn't return any result, or crashed during its operation.
+     * <p/>
+     * <p>You will receive this call immediately before onResume() when your
+     * activity is re-starting.
+     * <p/>
+     * <p>This method is never invoked if your activity sets
+     * {@link android.R.styleable#AndroidManifestActivity_noHistory noHistory} to
+     * <code>true</code>.
+     *
+     * @param requestCode The integer request code originally supplied to
+     *                    startActivityForResult(), allowing you to identify who this
+     *                    result came from.
+     * @param resultCode  The integer result code returned by the child activity
+     *                    through its setResult().
+     * @param data        An Intent, which can return result data to the caller
+     *                    (various data can be attached to Intent "extras").
+     * @see #startActivityForResult
+     * @see #createPendingResult
+     * @see #setResult(int)
+     */
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Log.d(TAG, "Activity result: " + String.valueOf(resultCode));
+    }
+
+    /**
      * function to verify login details in mysql db
      */
     private void checkLogin(final String email, final String password) {
@@ -124,7 +185,7 @@ public class LoginActivity extends Activity {
 
                 try {
                     JSONObject jObj = new JSONObject(response);
-                    boolean error = jOj.getBoolean("error");
+                    boolean error = jObj.getBoolean("error");
 
                     // Check for error node in json
                     if (!error) {
@@ -179,6 +240,7 @@ public class LoginActivity extends Activity {
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("email", email);
                 params.put("password", password);
+                params.put("action", "login");
 
                 return params;
             }

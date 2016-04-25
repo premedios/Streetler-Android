@@ -10,8 +10,11 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 import com.crashlytics.android.Crashlytics;
+import com.facebook.appevents.AppEventsLogger;
 
 import io.fabric.sdk.android.Fabric;
+
+import static com.facebook.FacebookSdk.sdkInitialize;
 
 
 public class AppController extends com.activeandroid.app.Application {
@@ -29,6 +32,8 @@ public class AppController extends com.activeandroid.app.Application {
         super.onCreate();
         Fabric.with(this, new Crashlytics());
         mInstance = this;
+        sdkInitialize(getApplicationContext());
+        AppEventsLogger.activateApp(this);
     }
 
     public RequestQueue getRequestQueue() {

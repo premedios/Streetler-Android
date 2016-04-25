@@ -83,8 +83,7 @@ public class RegisterActivity extends AppCompatActivity implements CalendarDateP
         // Check if user is already logged in or not
         if (session.isLoggedIn()) {
             // User is already logged in. Take him to main activity
-            Intent intent = new Intent(RegisterActivity.this,
-                    StreetlerActivity.class);
+            Intent intent = new Intent(RegisterActivity.this, StreetlerActivity.class);
             startActivity(intent);
             finish();
         }
@@ -256,11 +255,12 @@ public class RegisterActivity extends AppCompatActivity implements CalendarDateP
                 params.put("last_name", last_name);
                 params.put("email", email);
                 params.put("password", password);
-                params.put("sex", sex);
+                params.put("gender", String.valueOf(sex.charAt(0)));
                 params.put("city", city);
                 DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.MEDIUM, Locale.getDefault());
                 String dateString = dateFormat.format(date_of_birth);
                 params.put("date_of_birth", dateString);
+                params.put("action", "register");
 
                 return params;
             }

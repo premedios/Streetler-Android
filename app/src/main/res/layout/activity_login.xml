@@ -3,7 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/header_gradient"
     android:orientation="vertical"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
@@ -12,18 +11,14 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="150dp"
+        android:layout_marginTop="10dp"
         android:orientation="vertical">
 
-        <TextView
+        <ImageView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center_vertical"
-            android:gravity="center|center"
-            android:text="@string/LoginWelcome"
-            android:textColor="@color/colorText"
-            android:textSize="30sp"
-            android:textStyle="bold"/>
+            android:layout_height="150dp"
+            android:src="@drawable/logo"/>
 
     </LinearLayout>
 
@@ -63,6 +58,14 @@
             android:text="@string/LoginButtonText"
             android:textColor="@color/colorPrimaryDark"
             android:textSize="20sp"/>
+
+        <com.facebook.login.widget.LoginButton
+            android:id="@+id/facebook_login_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:height="44dp"
+            android:visibility="gone"/>
         <TextView
             android:id="@+id/signup"
             android:layout_width="match_parent"
