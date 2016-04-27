@@ -1,0 +1,56 @@
+{
+  "project_info": {
+    "project_id": "streetler-test",
+    "project_number": "857765228315",
+    "name": "streetler"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:857765228315:android:0469a911f6e17584",
+        "client_id": "android:com.premedios.streetler",
+        "client_type": 1,
+        "android_client_info": {
+          "package_name": "com.premedios.streetler",
+          "certificate_hash": []
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "857765228315-dmd6vv251vech1nq2ijvh9h7khlfguvc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.premedios.streetler",
+            "certificate_hash": "FB9512195F82E24AF4FEC57E0D6169CC23CD5D6B"
+          }
+        },
+        {
+          "client_id": "857765228315-iadno36pfc0of7puet7gg56ji50nqpee.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "cloud_messaging_service": {
+          "status": 1,
+          "apns_config": []
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "google_signin_service": {
+          "status": 2
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "client_info": [],
+  "ARTIFACT_VERSION": "1"
+}
