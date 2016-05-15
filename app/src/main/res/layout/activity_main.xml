@@ -6,7 +6,7 @@
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingTop="@dimen/main_activity_vertical_margin"
     tools:context="com.premedios.streetler.MainActivity">
 
     <RelativeLayout
@@ -16,21 +16,30 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="200dp"
+            android:layout_marginBottom="20dp"
             android:src="@drawable/logo" />
 
-        <Button
+        <TextView
             android:layout_width="match_parent"
-            android:layout_height="44dp"
-            android:layout_alignParentBottom="true"
-            android:text="REGISTER" />
+            android:layout_height="wrap_content"
+            android:text="STREETLER" />
 
         <Button
+            android:id="@+id/register_button"
             android:layout_width="match_parent"
-            android:layout_height="44dp"
+            android:layout_height="64dp"
             android:layout_alignParentBottom="true"
-            android:layout_marginBottom="50dp"
-            android:background="@color/transparent"
-            android:text="LOGIN" />
+            android:text="REGISTER"
+            android:textSize="20sp" />
+
+        <Button
+            android:id="@+id/login_button"
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="65dp"
+            android:text="LOGIN"
+            android:textSize="20sp" />
     </RelativeLayout>
 
 </RelativeLayout>
