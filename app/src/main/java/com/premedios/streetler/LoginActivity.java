@@ -31,11 +31,9 @@ import java.util.Map;
 
 public class LoginActivity extends Activity {
     private static final String TAG = RegisterActivity.class.getSimpleName();
-    private Button btnLogin;
-    private TextView btnLinkToRegister;
+    CallbackManager callbackManager;
     private EditText inputEmail;
     private EditText inputPassword;
-    private LoginButton btnFacebookLogin;
     private ProgressDialog pDialog;
     private SessionManager session;
     private SQLiteHandler db;
@@ -43,15 +41,14 @@ public class LoginActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
 
-        CallbackManager callbackManager;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
         inputEmail = (EditText) findViewById(R.id.email);
         inputPassword = (EditText) findViewById(R.id.password);
-        btnLogin = (Button) findViewById(R.id.login);
-        btnLinkToRegister = (TextView) findViewById(R.id.signup);
-        btnFacebookLogin = (LoginButton) findViewById(R.id.facebook_login_button);
+        Button btnLogin = (Button) findViewById(R.id.login);
+        TextView btnLinkToRegister = (TextView) findViewById(R.id.signup);
+        LoginButton btnFacebookLogin = (LoginButton) findViewById(R.id.facebook_login_button);
 
         callbackManager = CallbackManager.Factory.create();
 
@@ -71,8 +68,10 @@ public class LoginActivity extends Activity {
 
             @Override
             public void onError(FacebookException error) {
-                Log.d(TAG, "Facebook login error");
+                Log.d(TAG, "Facebook login error:" + error.getLocalizedMessage());
             }
+
+
         });
 
         btnLinkToRegister.setOnClickListener(new View.OnClickListener() {
@@ -161,6 +160,9 @@ public class LoginActivity extends Activity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         Log.d(TAG, "Activity result: " + String.valueOf(resultCode));
+        callbackManager.onActivityResult(requestCode, resultCode, data);
+        Log.d("FACEBOOK LOGIN", data.getExtras().toString());
+
     }
 
     /**

@@ -3,14 +3,14 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:colorForeground">@color/colorText</item>
-        <item name="android:windowBackground">@color/colorBackground</item>
-        <item name="android:colorBackground">@color/colorBackground</item>
-        <item name="android:textColorPrimary">@color/colorText</item>
-        <item name="android:colorButtonNormal">@color/colorAccent</item>
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryDark">@color/primary_dark</item>
+        <item name="colorAccent">@color/accent</item>
+        <item name="android:colorForeground">@color/primary</item>
+        <item name="android:windowBackground">@color/icons</item>
+        <item name="android:colorBackground">@color/icons</item>
+        <item name="android:textColorPrimary">@color/icons</item>
+        <item name="android:colorButtonNormal">@color/primary_dark</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
@@ -23,13 +23,13 @@
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
 
     <style name="TextLabel" parent="@style/TextAppearance.AppCompat">
-        <item name="android:textColorHint">@color/colorText</item>
-        <item name="android:textColorHighlight">@color/colorText</item>
-        <item name="android:textColorLink">@color/colorText</item>
+        <item name="android:textColorHint">@color/icons</item>
+        <item name="android:textColorHighlight">@color/accent</item>
+        <item name="android:textColorLink">@color/primary_light</item>
         <item name="android:textSize">14sp</item>
-        <item name="android:colorAccent">@color/colorText</item>
-        <item name="android:colorControlNormal">@color/colorText</item>
-        <item name="android:colorControlActivated">@color/colorText</item>
+        <item name="android:colorAccent">@color/icons</item>
+        <item name="android:colorControlNormal">@color/primary_light</item>
+        <item name="android:colorControlActivated">@color/primary_light</item>
     </style>
 
 </resources>

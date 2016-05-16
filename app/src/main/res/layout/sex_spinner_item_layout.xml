@@ -11,6 +11,6 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginTop="15dp"
-        android:textColor="@color/colorText"
+        android:textColor="@color/icons"
         android:textSize="25sp"/>
 </LinearLayout>

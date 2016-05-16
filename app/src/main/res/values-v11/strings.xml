@@ -2,4 +2,7 @@
 <resources>
     <string name="action_add_street">Add Street</string>
     <string name="city_hint">City</string>
+    <string name="registerbutton_text">REGISTER</string>
+    <string name="maintitle_text">STREETLER</string>
+    <string name="loginbutton_text">LOGIN</string>
 </resources>
