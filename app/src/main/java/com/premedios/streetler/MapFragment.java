@@ -36,7 +36,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     private String mParam1;
     private String mParam2;
 
-    private OnFragmentInteractionListener mListener;
+    private OnMapPinInteractionListener mListener;
 
     private GoogleMap mMap;
 
@@ -65,17 +65,17 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
+            mListener.onPinInteraction();
         }
     }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
+        if (context instanceof OnMapPinInteractionListener) {
+            mListener = (OnMapPinInteractionListener) context;
 
-            LocationManager locationManager = (LocationManager)context.getSystemService(context.LOCATION_SERVICE);
+            LocationManager locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
             LocationListener locationListener = new LocationListener() {
                 @Override
                 public void onLocationChanged(Location location) {
@@ -136,8 +136,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
      * "http://developer.android.com/training/basics/fragments/communicating.html"
      * >Communicating with Other Fragments</a> for more information.
      */
-    public interface OnFragmentInteractionListener {
+    public interface OnMapPinInteractionListener {
         // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
+        void onPinInteraction();
     }
 }

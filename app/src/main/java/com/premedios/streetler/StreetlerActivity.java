@@ -20,7 +20,7 @@ import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
 
 public class StreetlerActivity extends AppCompatActivity implements
-        MapFragment.OnFragmentInteractionListener {
+        MapFragment.OnMapPinInteractionListener, MyProfileFragment.OnFragmentInteractionListener {
 
     /**
      * The {@link PagerAdapter} that will provide
@@ -89,7 +89,7 @@ public class StreetlerActivity extends AppCompatActivity implements
     }
 
     @Override
-    public void onFragmentInteraction(Uri uri) {
+    public void onProfileFragmentInteraction(String string) {
 
     }
 
@@ -133,6 +133,11 @@ public class StreetlerActivity extends AppCompatActivity implements
         client.disconnect();
     }
 
+    @Override
+    public void onPinInteraction() {
+        // TODO: Code to see if the pin has moved or a new pin was placed.
+    }
+
     /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
      * one of the sections/tabs/pages.
@@ -157,7 +162,7 @@ public class StreetlerActivity extends AppCompatActivity implements
         @Override
         public int getCount() {
             // Show 3 total pages.
-            return 4;
+            return 2;
         }
 
         @Override
