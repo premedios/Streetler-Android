@@ -3,7 +3,6 @@ package com.premedios.streetler;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
@@ -11,7 +10,6 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -19,9 +17,9 @@ import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
 
-public class StreetlerActivity extends AppCompatActivity implements
-        MapFragment.OnMapPinInteractionListener, MyProfileFragment.OnFragmentInteractionListener {
+public class StreetlerActivity extends AppCompatActivity implements MyProfileFragment.OnFragmentInteractionListener {
 
+    public static FragmentManager fragmentManager;
     /**
      * The {@link PagerAdapter} that will provide
      * fragments for each of the sections. We use a
@@ -47,11 +45,13 @@ public class StreetlerActivity extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_streetler);
 
+        fragmentManager = getSupportFragmentManager();
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
-        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+        mSectionsPagerAdapter = new SectionsPagerAdapter(fragmentManager);
 
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
@@ -136,48 +136,5 @@ public class StreetlerActivity extends AppCompatActivity implements
     @Override
     public void onPinInteraction() {
         // TODO: Code to see if the pin has moved or a new pin was placed.
-    }
-
-    /**
-     * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
-     * one of the sections/tabs/pages.
-     */
-    public class SectionsPagerAdapter extends FragmentPagerAdapter {
-
-        public SectionsPagerAdapter(FragmentManager fm) {
-            super(fm);
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            // getItem is called to instantiate the fragm{ent for the given page.
-            Log.d("FragmentStreetler", String.format("%d", position));
-            if( position == 0) return new MapFragment();
-            if( position == 1) return new MyProfileFragment();
-            if( position == 2) return new MyProfileFragment();
-            if( position == 3) return new MyProfileFragment();
-            return null;
-        }
-
-        @Override
-        public int getCount() {
-            // Show 3 total pages.
-            return 2;
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            switch (position) {
-                case 0:
-                    return "MAP";
-                case 1:
-                    return "MY PROFILE";
-                case 2:
-                    return "FRIENDS";
-                case 3:
-                    return "NEWS";
-            }
-            return null;
-        }
     }
 }
