@@ -54,7 +54,7 @@
         <Button
             android:id="@+id/login"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:layout_marginTop="20dp"
             android:background="@color/primary"
             android:text="@string/LoginButtonText"
@@ -65,9 +65,15 @@
             android:id="@+id/facebook_login_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="20dp"
-            android:height="44dp" />
+            android:visibility="gone" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#4267B2"
+            android:drawableLeft="@drawable/fb_f_logo__white"
+            android:text="Login With Facebook"
+            android:textSize="20sp" />
         <TextView
             android:id="@+id/signup"
             android:layout_width="match_parent"
