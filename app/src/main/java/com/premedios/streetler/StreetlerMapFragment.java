@@ -2,21 +2,21 @@ package com.premedios.streetler;
 
 import android.content.Context;
 import android.location.Location;
-import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.OnMapClickListener;
-import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 
-public class StreetlerMapFragment extends MapFragment implements OnMapReadyCallback {
+public class StreetlerMapFragment extends SupportMapFragment implements OnMapReadyCallback {
 
     private boolean needsInit = false;
     private GoogleMap mMap;
@@ -42,7 +42,7 @@ public class StreetlerMapFragment extends MapFragment implements OnMapReadyCallb
                 Log.d("MapClick", "Map clicked on");
                 MarkerOptions options = new MarkerOptions().snippet("Hello").anchor(0.5f, 0.5f);
                 options.position(latLng);
-                mMap.addMarker(options);
+                googleMap.addMarker(options);
             }
         });
 
@@ -53,21 +53,6 @@ public class StreetlerMapFragment extends MapFragment implements OnMapReadyCallb
                 googleMap.addMarker(new MarkerOptions().position(new LatLng(location.getLatitude(), location.getLongitude())));
                 googleMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(location.getLatitude(), location.getLongitude())));
                 googleMap.moveCamera(CameraUpdateFactory.zoomTo(10.0f));
-            }
-
-            @Override
-            public void onStatusChanged(String provider, int status, Bundle extras) {
-
-            }
-
-            @Override
-            public void onProviderEnabled(String provider) {
-
-            }
-
-            @Override
-            public void onProviderDisabled(String provider) {
-
             }
         };
     }

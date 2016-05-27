@@ -6,14 +6,15 @@ import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 
 /**
  * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
  * one of the sections/tabs/pages.
  */
-public class StreetlerPagerAdapter extends FragmentPagerAdapter {
+public class StreetlerPagerAdapter extends FragmentStatePagerAdapter {
 
-    private Context ctx;
+    Context ctx;
 
     public StreetlerPagerAdapter(Context ctx, FragmentManager fm) {
 
