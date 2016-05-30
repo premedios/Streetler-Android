@@ -39,4 +39,7 @@
     <string name="registerbutton_text">REGISTER</string>
     <string name="maintitle_text">STREETLER</string>
     <string name="loginbutton_text">LOGIN</string>
+    <string name="title_activity_logged_user">LoggedUserActivity</string>
+    <string name="title_activity_streetler_activity_new">StreetlerActivityNew</string>
+    <string name="login_with_facebook">Login With Facebook</string>
 </resources>

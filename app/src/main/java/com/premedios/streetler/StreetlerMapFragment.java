@@ -13,6 +13,7 @@ import com.google.android.gms.maps.GoogleMap.OnMapClickListener;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 
@@ -40,9 +41,17 @@ public class StreetlerMapFragment extends SupportMapFragment implements OnMapRea
             @Override
             public void onMapClick(LatLng latLng) {
                 Log.d("MapClick", "Map clicked on");
-                MarkerOptions options = new MarkerOptions().snippet("Hello").anchor(0.5f, 0.5f);
-                options.position(latLng);
+                MarkerOptions options = new MarkerOptions().title("Here").snippet("Hello").position(latLng);
                 googleMap.addMarker(options);
+            }
+        });
+
+        googleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(Marker marker) {
+                Log.d("MarkerClick", "Marker title: " + marker.getTitle());
+                marker.showInfoWindow();
+                return true;
             }
         });
 
