@@ -46,16 +46,22 @@ public class LoginActivity extends Activity {
 
         inputEmail = (EditText) findViewById(R.id.email);
         inputPassword = (EditText) findViewById(R.id.password);
-        Button btnLogin = (Button) findViewById(R.id.login);
+        Button btnLogin = (Button) findViewById(R.id.email_login_button);
         TextView btnLinkToRegister = (TextView) findViewById(R.id.signup);
-        LoginButton btnFacebookLogin = (LoginButton) findViewById(R.id.facebook_login_button);
+        final LoginButton btnFacebookLogin = (LoginButton) findViewById(R.id.facebook_login_button);
+        Button btnStreetlerFacebookLogin = (Button) findViewById(R.id.facebook_login);
+        btnStreetlerFacebookLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                btnFacebookLogin.performClick();
+            }
+        });
 
         callbackManager = CallbackManager.Factory.create();
 
         btnFacebookLogin.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
-                Log.d(TAG, "Facebook login success");
                 Intent i = new Intent(getApplicationContext(), StreetlerActivity.class);
                 startActivity(i);
                 finish();
@@ -63,12 +69,12 @@ public class LoginActivity extends Activity {
 
             @Override
             public void onCancel() {
-                Log.d(TAG, "Facebook login cancel");
+
             }
 
             @Override
             public void onError(FacebookException error) {
-                Log.d(TAG, "Facebook login error:" + error.getLocalizedMessage());
+
             }
 
 
@@ -77,7 +83,9 @@ public class LoginActivity extends Activity {
         btnLinkToRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent i = new Intent(getApplicationContext(), RegisterActivity.class);
+                startActivity(i);
+                finish();
             }
         });
         // Progress dialog
